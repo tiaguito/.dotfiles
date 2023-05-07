@@ -102,4 +102,4 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.zsh_profile ] && source ~/.zsh_profile
 
-alias dotfiles=/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
