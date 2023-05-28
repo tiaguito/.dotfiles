@@ -22,6 +22,7 @@
 "    -> Status line
 "    -> Editing mappings
 "    -> vimgrep searching and cope displaying
+"    -> Git and fugitive
 "    -> Spell checking
 "    -> Misc
 "    -> Helper functions
@@ -49,6 +50,8 @@ Plug 'junegunn/fzf', { 'do' : { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'mbbill/undotree'
+Plug 'tpope/vim-fugitive'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -57,7 +60,7 @@ call plug#end()
 nnoremap <silent><leader>1 :source ~/.vimrc \| :PlugInstall<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   => markdown-preview config
+"       => markdown-preview config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " set to 1, nvim will open the preview window after entering the
 " markdown buffer
@@ -121,20 +124,20 @@ let g:mkdp_browserfunc = ''
 " sequence_diagrams: js-sequence-diagrams options
 " content_editable: if enable content editable for preview page, default: v:false
 " disable_filename: if disable filename header for preview  page, default: 0
- let g:mkdp_preview_options = {
-     \ 'mkit': {},
-     \ 'katex': {},
-     \ 'uml': {},
-     \ 'maid': {},
-     \ 'disable_sync_scroll': 0,
-     \ 'sync_scroll_type': 'middle',
-     \ 'hide_yaml_meta': 1,
-     \ 'sequence_diagrams': {},
-     \ 'flowchart_diagrams': {},
-     \ 'content_editable': v:false,
-     \ 'disable_filename': 0,
-     \ 'toc': {}
-     \ }
+let g:mkdp_preview_options = {
+ \ 'mkit': {},
+ \ 'katex': {},
+ \ 'uml': {},
+ \ 'maid': {},
+ \ 'disable_sync_scroll': 0,
+ \ 'sync_scroll_type': 'middle',
+ \ 'hide_yaml_meta': 1,
+ \ 'sequence_diagrams': {},
+ \ 'flowchart_diagrams': {},
+ \ 'content_editable': v:false,
+ \ 'disable_filename': 0,
+ \ 'toc': {}
+ \ }
 
 " use a custom markdown style must be absolute path
 " like '/Users/username/markdown.css' or expand('~/markdown.css')
@@ -211,9 +214,9 @@ set wildmenu
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 if has("win16") || has("win32")
-    set wildignore+=.git\*,.hg\*,.svn\*
+set wildignore+=.git\*,.hg\*,.svn\*
 else
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
 
 " Always show current position
@@ -261,7 +264,7 @@ set tm=500
 
 " Properly disable sound on errors on MacVim
 if has("gui_macvim")
-    autocmd GUIEnter * set vb t_vb=
+autocmd GUIEnter * set vb t_vb=
 endif
 
 " Add a bit extra margin to the left
@@ -285,10 +288,10 @@ colorscheme tokyonight
 
 " Set extra options when running in GUI mode
 if has("gui_running")
-    set guioptions-=T
-    set guioptions-=e
-    set t_Co=256
-    set guitablabel=%M\ %t
+set guioptions-=T
+set guioptions-=e
+set t_Co=256
+set guitablabel=%M\ %t
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -383,10 +386,13 @@ map <leader>te :tabedit <C-r>=escape(expand("%:p:h"), " ")<cr>/
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
+" tell VIM to look for a ctags index file in the source directory
+set tags=/.tags;$HOME,tags;
+
 " Specify the behavior when switching between buffers
 try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
+set switchbuf=useopen,usetab,newtab
+set stal=2
 catch
 endtry
 
@@ -417,25 +423,31 @@ vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
+nmap <D-j> <M-j>
+nmap <D-k> <M-k>
+vmap <D-j> <M-j>
+vmap <D-k> <M-k>
 endif
 
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    silent! %s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
+let save_cursor = getpos(".")
+let old_query = getreg('/')
+silent! %s/\s\+$//e
+call setpos('.', save_cursor)
+call setreg('/', old_query)
 endfun
 
 if has("autocmd")
-    autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
+autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 endif
 
+nnoremap <leader>u :UndotreeToggle<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Git and fugitive
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>gs :Git<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
@@ -519,4 +531,3 @@ function! VisualSelection(direction, extra_filter) range
     let @/ = l:pattern
     let @" = l:saved_reg
 endfunction
-

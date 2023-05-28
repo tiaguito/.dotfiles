@@ -1,0 +1,10 @@
+alias grep='grep --color=auto'
+
+alias t="tmux"
+alias ta="t a -t"
+alias tls="t ls"
+alias tn="t new -t"
+
+alias k='kubectl'
+alias kgp='kubectl get pods'
+alias ke='kubectl exec'

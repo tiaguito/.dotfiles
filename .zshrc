@@ -102,4 +102,17 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.zsh_profile ] && source ~/.zsh_profile
 
+if ~ [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+then
+    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+
+export PATH
+
+if [ -f ~/.zsh_aliases ]; then
+    . ~/.zsh_aliases
+fi
+
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+ctags=/usr/local/bin/ctags
