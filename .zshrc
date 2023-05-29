@@ -102,7 +102,7 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.zsh_profile ] && source ~/.zsh_profile
 
-if ~ [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
 then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
