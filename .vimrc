@@ -52,12 +52,19 @@ Plug 'tpope/vim-fugitive'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jiangmiao/auto-pairs'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
 " Remap to install new pluggins
 nnoremap <silent><leader>1 :source ~/.vimrc \| :PlugInstall<CR>
+
+" Load other parts of the vimrc
+for f in glob('~/.vim/*.vim', 0, 1)
+    execute 'source' f
+endfor
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "       => markdown-preview config

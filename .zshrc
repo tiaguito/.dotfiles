@@ -112,7 +112,3 @@ export PATH
 if [ -f ~/.zsh_aliases ]; then
     . ~/.zsh_aliases
 fi
-
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-
-ctags=/usr/local/bin/ctags
