@@ -112,3 +112,10 @@ export PATH
 if [ -f ~/.zsh_aliases ]; then
     . ~/.zsh_aliases
 fi
+
+# whenever I connect to a terminal, if there's a tmux session available
+# attach to the first one
+# if not, create a new session
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+    tmux attach || tmux
+fi
