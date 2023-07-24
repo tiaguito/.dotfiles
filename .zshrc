@@ -79,7 +79,7 @@ source $ZSH/oh-my-zsh.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -106,16 +106,18 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
 then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
-
 export PATH
 
 if [ -f ~/.zsh_aliases ]; then
     . ~/.zsh_aliases
 fi
 
-# whenever I connect to a terminal, if there's a tmux session available
-# attach to the first one
-# if not, create a new session
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-    tmux attach || tmux
-fi
+export TMUX_TMPDIR=/$HOME/.local/tmp
+
+source <(kubectl completion zsh)
+
+mcd() { mkdir -p $1; cd $1 }
+cdl() { cd $1; ls}
+gfind() { find / -iname $@ 2>/dev/null }
+lfind() { find . -iname $@ 2>/dev/null }
+rtfm() { help $@ || man $@  }

@@ -1,18 +1,27 @@
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-ctags=/usr/local/bin/ctags
+ctags=/opt/homebrew/bin/ctags
+
 alias sed='gsed'
-alias awk='gawk'
-alias grep='ggrep'
 alias find='gfind'
+alias grep='ggrep'
+alias awk='gawk'
 
-alias grep='grep --color=auto'
+alias grep='ggrep --color=always'
 
-alias t="tmux"
-alias ta="t a -t"
-alias tls="t ls"
-alias tn="t new -t"
+alias t='tmux'
+alias ta='t a -t'
+alias tls='t ls'
+alias tn='t new -t'
 
 alias k='kubectl'
 alias kgp='kubectl get pods'
 alias ke='kubectl exec'
+
+alias s='ssh'
+alias c='clear'
+alias cx='chmod +x'
+alias ls='ls -thor --color=always'
+alias more='less'
+alias ..='cd ..'
+alias cleanup='rm -f *.tmp *.aux *.log'

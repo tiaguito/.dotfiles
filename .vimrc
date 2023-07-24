@@ -71,7 +71,7 @@ endfor
 " Sets how many lines of history VIM has to remember
 set history=500
 
-" Enable filetype plugins
+"Enable filetype plugins
 filetype plugin on
 filetype indent on
 
@@ -217,9 +217,9 @@ set expandtab
 " Be smart when using tabs ;)
 set smarttab
 
-" 1 tab == 2 spaces
-set shiftwidth=2
-set tabstop=2
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
 
 " Linebreak on 500 characters
 set lbr
