@@ -3,22 +3,21 @@ Simple solution to manage my configuration files for tools used in MacOS or Linu
 
 The solution used to manage my dotfiles repo comes from this [article](https://news.ycombinator.com/item?id=11071754).
 
-## Steps for a fresh install
+## Install
 **Note:** make sure that if you have previous config files in the machine that they are properly backed up. Renaming those files might be enough.
-
-- Export the following alias to your `.bashrc` or `.zshrc` file:
-  - `alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'`
-
-- Make git ignore source repository
-  - `echo ".dotfiles" >> .gitignore`
-
-- Clone the repository into your `$HOME` directory
-  - `git clone --bare https://github.com/tiaguito/.dotfiles $HOME/.dotfiles`
-
-- Set the flag `showUntrackedFiles` to `no` on this specific (local) repository:
-  - `config config --local status.showUntrackedFiles no`
-
-
+```bash
+# Move to home folder
+cd ~
+# Export the following alias to your `.bashrc` or `.zshrc` file:
+`alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'`
+# Make git ignore source repository. This avoids recursion problems
+`echo ".dotfiles" >> .gitignore`
+# Clone the repository into `$HOME` directory
+`git clone --bare https://github.com/tiaguito/.dotfiles $HOME/.dotfiles`
+# Change git setup to only show tracked files:
+`config config --local status.showUntrackedFiles no`
+```
+## Use
 From this point any file in the `$HOME` folder can be versioned with commands like the following:
 ```bash
 dotfiles status
