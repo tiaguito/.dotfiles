@@ -129,5 +129,3 @@ cdl() { cd $1; ls}
 gfind() { find / -iname $@ 2>/dev/null }
 lfind() { find . -iname $@ 2>/dev/null }
 rtfm() { help $@ || man $@  }
-
-alias dotfiles='/usr/bin/git --git-dir="$HOME/.dotfiles" --work-tree="$HOME"'

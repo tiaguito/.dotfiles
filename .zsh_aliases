@@ -1,0 +1,20 @@
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+alias grep='grep --color=always'
+
+alias t='tmux'
+alias ta='t a -t'
+alias tls='t ls'
+alias tn='t new -t'
+
+#alias k='kubectl'
+#alias kgp='kubectl get pods'
+#alias ke='kubectl exec'
+
+alias s='ssh'
+alias c='clear'
+alias cx='chmod +x'
+alias ls='ls -lthr --color=always'
+alias ..='cd ..'
+alias cleanup='rm -f *.tmp *.aux *.log'
+
