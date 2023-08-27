@@ -70,7 +70,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-pages colorize pip python)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -100,18 +100,34 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+if [ -f ~/.zsh_profile ] 
+then
+    source ~/.zsh_profile
+fi
+
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
 then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 
+PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
+PATH="$PATH:$HOME/.cargo/bin"
+
 export PATH
 
-[ -f ~/.zsh_profile ] && source ~/.zsh_profile
-
-if [ -f ~/.zsh_aliases ]
-then
-    . ~/.zsh_aliases
+if [ -f ~/.zsh_aliases ]; then
+    source ~/.zsh_aliases
 fi
 
-alias dotfiles='/usr/bin/git --git-dir=/home/tiago/.dotfiles --work-tree=/home/tiago'
+export TMUX_TMPDIR=/$HOME/.local/tmp
+export 
+
+#source <(kubectl completion zsh)
+
+mcd() { mkdir -p $1; cd $1 }
+cdl() { cd $1; ls}
+gfind() { find / -iname $@ 2>/dev/null }
+lfind() { find . -iname $@ 2>/dev/null }
+rtfm() { help $@ || man $@  }
+
+alias dotfiles='/usr/bin/git --git-dir="$HOME/.dotfiles" --work-tree="$HOME"'
