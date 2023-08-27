@@ -9,13 +9,13 @@ The solution used to manage my dotfiles repo comes from this [article](https://n
 # Move to home folder
 cd ~
 # Export the following alias to your `.bashrc` or `.zshrc` file:
-`alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'`
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 # Make git ignore source repository. This avoids recursion problems
-`echo ".dotfiles" >> .gitignore`
+echo ".dotfiles" >> .gitignore
 # Clone the repository into `$HOME` directory
-`git clone --bare https://github.com/tiaguito/.dotfiles $HOME/.dotfiles`
+git clone --bare https://github.com/tiaguito/.dotfiles $HOME/.dotfiles
 # Change git setup to only show tracked files:
-`config config --local status.showUntrackedFiles no`
+dotfiles config --local status.showUntrackedFiles no
 ```
 ## Use
 From this point any file in the `$HOME` folder can be versioned with commands like the following:
