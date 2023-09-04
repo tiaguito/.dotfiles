@@ -70,7 +70,13 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    colored-man-pages
+    pip
+    git
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -120,7 +126,6 @@ if [ -f ~/.zsh_aliases ]; then
 fi
 
 export TMUX_TMPDIR=/$HOME/.local/tmp
-export 
 
 #source <(kubectl completion zsh)
 
