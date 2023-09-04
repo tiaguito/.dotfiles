@@ -3,9 +3,9 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias grep='grep --color=always'
 
 alias t='tmux'
-alias ta='t a -t'
-alias tls='t ls'
-alias tn='t new -t'
+alias ta='tmux a -t'
+alias tls='tmux ls'
+alias tn='tmux new -t'
 
 #alias k='kubectl'
 #alias kgp='kubectl get pods'
@@ -18,3 +18,4 @@ alias ls='ls -lthr --color=always'
 alias ..='cd ..'
 alias cleanup='rm -f *.tmp *.aux *.log'
 
+alias df='df -h'
