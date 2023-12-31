@@ -70,7 +70,17 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-pages colorize pip python brew)
+plugins=(
+    git
+    colored-man-pages
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    colorize 
+    pip 
+    python 
+    brew
+    zsh-vi-mode
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -110,6 +120,8 @@ then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 export PATH
+
+export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 
 if [ -f ~/.zsh_aliases ]; then
     source ~/.zsh_aliases

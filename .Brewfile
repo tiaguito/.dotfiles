@@ -3,6 +3,7 @@ tap "homebrew/cask-fonts"
 tap "homebrew/core"
 
 
+brew "parallel"
 brew "bat"
 brew "fzf"
 brew "ack"
