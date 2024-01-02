@@ -24,7 +24,6 @@
 "    -> Status line
 "    -> Editing mappings
 "    -> FZF
-"    -> vimgrep searching and cope displaying
 "    -> Git and fugitive
 "    -> Debugging
 "    -> Spell checking
@@ -51,7 +50,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" Cplorscheme
+" Colorscheme
 Plug 'folke/tokyonight.nvim'
 
 " Undo Tree
@@ -76,6 +75,12 @@ Plug 'saadparwaiz1/cmp_luasnip'
 " Syntax
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
+
+" Debugger Adapter Protocol
+Plug 'mfussenegger/nvim-dap'
+Plug 'leoluz/nvim-dap-go'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'theHamsta/nvim-dap-virtual-text'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -577,3 +582,6 @@ function! VisualSelection(direction, extra_filter) range
     let @/ = l:pattern
     let @" = l:saved_reg
 endfunction
+
+
+

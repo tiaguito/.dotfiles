@@ -76,6 +76,8 @@ plugins=(
     colored-man-pages
     pip
     git
+    brew
+    zsh-vi-mode
 )
 
 source $ZSH/oh-my-zsh.sh
