@@ -121,7 +121,7 @@ then
 fi
 export PATH
 
-export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+export PATH="/usr/local/opt/mysql-client/bin:$(brew --prefix)/opt/llvm/bin:$PATH"
 
 if [ -f ~/.zsh_aliases ]; then
     source ~/.zsh_aliases
