@@ -1,4 +1,5 @@
 local nvim_lsp = require('lspconfig')
+local util = require("lspconfig.util")
 
   local on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -53,8 +54,33 @@ local nvim_lsp = require('lspconfig')
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
   local servers = {'pyright', 'gopls', 'eslint', 'rust_analyzer', 'clangd', 'cmake', 'lua_ls'}
   for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-    }
+    if lsp == "clangd" then
+        nvim_lsp[lsp].setup {
+          capabilities = capabilities,
+          on_attach = on_attach,
+            cmd = {
+              "clangd",
+              "--offset-encoding=utf-16",
+            }
+        }
+    elseif lsp == "sourcekit" then
+      nvim_lsp[lsp].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        cmd = {
+          "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
+        },
+        root_dir = function(filename, _)
+          return util.root_pattern("buildServer.json")(filename)
+            or util.root_pattern("*.xcodeproj", "*.xcworkspace")(filename)
+            or util.find_git_ancestor(filename)
+            or util.root_pattern("Package.swift")(filename)
+        end,
+      }
+    else
+      nvim_lsp[lsp].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
+    end
   end
