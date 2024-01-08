@@ -1,14 +1,4 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer:
-"       Amir Salihefendic - @amix3k
-"
-" Awesome_version:
-"       Get this config, nice color schemes and lots of plugins!
-"
-"       Install the awesome version from:
-"
-"           https://github.com/amix/vimrc
-"
 " Sections:
 "    -> vim-plug and pluggins installation
 "       -> markdown-preview config
@@ -18,14 +8,12 @@
 "    -> Colors and Fonts
 "    -> Files and backups
 "    -> Text, tab and indent related
-"    -> LSP, code completion, and syntax highlighting
 "    -> Visual mode related
 "    -> Moving around, tabs and buffers
 "    -> Status line
 "    -> Editing mappings
 "    -> FZF
 "    -> Git and fugitive
-"    -> Debugging
 "    -> Spell checking
 "    -> Misc
 "    -> Helper functions
@@ -81,6 +69,9 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'leoluz/nvim-dap-go'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'theHamsta/nvim-dap-virtual-text'
+
+" Cloack
+Plug 'laytan/cloak.nvim'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -265,15 +256,6 @@ set si "Smart indent
 set wrap "Wrap lines
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => LSP and code completion
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Completion
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-
 """""""""""""""""""""""""""""""
 " => Visual mode related
 """"""""""""""""""""""""""""""
@@ -340,9 +322,8 @@ endtry
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-
-vnoremap("J", ":m '>+1<CR>gv=gv")
-vnoremap("K", ":m '<-2<CR>gv=gv")
+xnoremap J :m '>+1<CR>gv=gv
+xnoremap K :m '<-2<CR>gv=gv
 
 """"""""""""""""""""""""""""""
 " => Status line
