@@ -52,7 +52,7 @@ local util = require("lspconfig.util")
 
   -- Set up lspconfig.
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  local servers = {'pyright', 'gopls', 'eslint', 'rust_analyzer', 'clangd', 'cmake', 'lua_ls'}
+  local servers = {'pyright', 'gopls', 'eslint', 'rust_analyzer', 'clangd', 'cmake', 'lua_ls', 'html', 'htmx'}
   for _, lsp in ipairs(servers) do
     if lsp == "clangd" then
         nvim_lsp[lsp].setup {
