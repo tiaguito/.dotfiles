@@ -44,7 +44,7 @@ Plug 'folke/tokyonight.nvim'
 " Undo Tree
 Plug 'mbbill/undotree'
 
-Plug 'jiangmiao/auto-pairs'
+Plug 'windwp/nvim-autopairs'
 
 " Git
 Plug 'tpope/vim-fugitive'
