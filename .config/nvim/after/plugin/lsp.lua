@@ -27,6 +27,7 @@ local util = require("lspconfig.util")
     buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 
     buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+    buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 
     -- Set some keybinds conditional on server capabilities
     if client.resolved_capabilities.document_formatting then
@@ -47,6 +48,31 @@ local util = require("lspconfig.util")
             autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
         augroup END
         ]]
+    end
+
+    vim.cmd([[
+            augroup formatting
+                autocmd! * <buffer>
+                autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
+                autocmd BufWritePre <buffer> lua OrganizeImports(1000)
+            augroup END
+        ]])
+  end
+
+  -- organize imports
+  -- https://github.com/neovim/nvim-lspconfig/issues/115#issuecomment-902680058
+  function OrganizeImports(timeoutms)
+    local params = vim.lsp.util.make_range_params()
+    params.context = { only = { "source.organizeImports" } }
+    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeoutms)
+    for _, res in pairs(result or {}) do
+      for _, r in pairs(res.result or {}) do
+        if r.edit then
+          vim.lsp.util.apply_workspace_edit(r.edit, "UTF-8")
+        else
+          vim.lsp.buf.execute_command(r.command)
+        end
+      end
     end
   end
 
