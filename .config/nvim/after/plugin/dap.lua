@@ -1,8 +1,10 @@
 vim.keymap.set("n", "<F2>", ":lua require'dap'.step_into()<CR>")
 vim.keymap.set("n", "<F3>", ":lua require'dap'.step_over()<CR>")
-vim.keymap.set("n", "<F4>", ":lua require'dap'.step_out()<CR>")
+vim.keymap.set("n", "<S-F2>", ":lua require'dap'.step_out()<CR>")
 vim.keymap.set("n", "<F5>", ":lua require'dap'.continue()<CR>")
-vim.keymap.set("n", "<F6>", ":lua require'dap'.step_back()<CR>")
+vim.keymap.set("n", "<C-S-F5>", ":lua require'dap'.restart()<CR>")
+vim.keymap.set("n", "<F6>", ":lua require'dap'.pause()<CR>")
+vim.keymap.set("n", "<F7>", ":lua require'dap'.step_back()<CR>")
 vim.keymap.set("n", "<space>b", ":lua require'dap'.toggle_breakpoint()<CR>")
 vim.keymap.set("n", "<space>lb", ":lua require'dap'.list_breakpoints()<CR>")
 vim.keymap.set("n", "<space>cb", ":lua require'dap'.clear_breakpoints()<CR>")
@@ -11,8 +13,26 @@ vim.keymap.set("n", "<space>dr", ":lua require'dap'.repl.open()<CR>")
 vim.keymap.set("n", "<space>dt", ":lua require'dap-go'.debug_test()<CR>")
 
 local dap, dapui = require("dap"), require("dapui")
-require("dap-go").setup()
 require("dapui").setup()
+
+require("dap-go").setup {
+  dap_configurations = {
+    {
+      type = "go",
+      name = "Attach remote / Headless",
+      mode = "remote",
+      request = "attach",
+    },
+  },
+  delve = {
+    path = "dlv",
+    initialize_timeout_sec = 20,
+    port = "38697",
+    args = {},
+    build_flags = "",
+  },
+}
+
 require("nvim-dap-virtual-text").setup {
   enabled = true,
 
