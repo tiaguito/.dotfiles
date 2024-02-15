@@ -63,6 +63,7 @@ Plug 'saadparwaiz1/cmp_luasnip'
 " Syntax
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
+Plug 'nvim-treesitter/nvim-treesitter-context'
 
 " Debugger Adapter Protocol
 Plug 'mfussenegger/nvim-dap'
