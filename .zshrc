@@ -120,6 +120,7 @@ fi
 
 PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
 PATH="$PATH:$HOME/.cargo/bin"
+PATH="$PATH:$(yarn global bin)"
 
 export PATH
 

@@ -18,7 +18,8 @@ require'nvim-treesitter.configs'.setup {
         "dockerfile",
         "query",
         "gitignore",
-        "markdown"
+        "markdown",
+        "yaml",
     },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
