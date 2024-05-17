@@ -8,7 +8,7 @@ local on_attach = function(client, bufnr)
   -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings
-  local opts = { noremap=true, silent=true }
+  local opts = { noremap = true, silent = true }
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -32,14 +32,14 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
   -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
+  if client.server_capabilities.document_formatting then
     buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  elseif client.resolved_capabilities.document_range_formatting then
+  elseif client.server_capabilities.document_range_formatting then
     buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   end
 
   -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
+  if client.server_capabilities.document_highlight then
     require('lspconfig').util.nvim_multiline_command [[
         :hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
         :hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
@@ -80,7 +80,8 @@ end
 
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-local servers = {'pyright', 'gopls', 'eslint', 'rust_analyzer', 'clangd', 'cmake', 'lua_ls', 'html', 'htmx', 'templ', 'bashls'}
+local servers = { 'pyright', 'gopls', 'eslint', 'rust_analyzer', 'clangd', 'cmake', 'lua_ls', 'html', 'htmx', 'templ',
+  'bashls' }
 for _, lsp in ipairs(servers) do
   if lsp == "clangd" then
     nvim_lsp[lsp].setup {
@@ -100,9 +101,9 @@ for _, lsp in ipairs(servers) do
       },
       root_dir = function(filename, _)
         return util.root_pattern("buildServer.json")(filename)
-          or util.root_pattern("*.xcodeproj", "*.xcworkspace")(filename)
-          or util.find_git_ancestor(filename)
-          or util.root_pattern("Package.swift")(filename)
+            or util.root_pattern("*.xcodeproj", "*.xcworkspace")(filename)
+            or util.find_git_ancestor(filename)
+            or util.root_pattern("Package.swift")(filename)
       end,
     }
   else
@@ -120,8 +121,8 @@ nvim_lsp['yamlls'].setup {
     yaml = {
       schemas = {
         ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = "/*.k8s.yaml",
-    ["http://json.schemastore.org/kustomization"] = "kustomization.yaml",
-    ["https://raw.githubusercontent.com/GoogleContainerTools/skaffold/master/docs/content/en/schemas/v2beta8.json"] = "skaffold.yaml",
+        ["http://json.schemastore.org/kustomization"] = "kustomization.yaml",
+        ["https://raw.githubusercontent.com/GoogleContainerTools/skaffold/master/docs/content/en/schemas/v2beta8.json"] = "skaffold.yaml",
       }
     }
   }

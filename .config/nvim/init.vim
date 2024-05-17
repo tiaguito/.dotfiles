@@ -66,6 +66,7 @@ Plug 'nvim-treesitter/playground'
 Plug 'nvim-treesitter/nvim-treesitter-context'
 
 " Debugger Adapter Protocol
+Plug 'nvim-neotest/nvim-nio'
 Plug 'mfussenegger/nvim-dap'
 Plug 'leoluz/nvim-dap-go'
 Plug 'rcarriga/nvim-dap-ui'
@@ -509,6 +510,33 @@ map <leader>x :e ~/buffer.md<cr>
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
+
+function DisableSyntaxTreesitter()
+    if exists(':TSBufDisable')
+        exec 'TSBufDisable autotag'
+        exec 'TSBufDisable highlight'
+        exec 'TSBufDisable incremental_selection'
+        exec 'TSBufDisable indent'
+        exec 'TSBufDisable playground'
+        exec 'TSBufDisable query_linter'
+        exec 'TSBufDisable rainbow'
+        exec 'TSBufDisable refactor.highlight_definitions'
+        exec 'TSBufDisable refactor.navigation'
+        exec 'TSBufDisable refactor.smart_rename'
+        exec 'TSBufDisable refactor.highlight_current_scope'
+        exec 'TSBufDisable textobjects.swap'
+        " exec 'TSBufDisable textobjects.move'
+        exec 'TSBufDisable textobjects.lsp_interop'
+        exec 'TSBufDisable textobjects.select'
+    endif
+
+    set foldmethod=manual
+endfunction
+
+augroup BigFileDisable
+    autocmd!
+    autocmd BufReadPre,FileReadPre * if getfsize(expand("%")) > 512 * 1024 | exec DisableSyntaxTreesitter() | endif
+augroup END
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
