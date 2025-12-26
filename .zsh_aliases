@@ -19,3 +19,8 @@ alias ..='cd ..'
 alias cleanup='rm -f *.tmp *.aux *.log'
 
 alias df='df -h'
+
+alias gcc='gcc-15'
+alias g++='g++-15'
+alias c++='c++-15'
+alias cpp='cpp-15'

@@ -12,7 +12,6 @@
 "    -> Moving around, tabs and buffers
 "    -> Status line
 "    -> Editing mappings
-"    -> FZF
 "    -> Git and fugitive
 "    -> Spell checking
 "    -> Misc
@@ -20,83 +19,22 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" VimPlug and pluggins installation
+source $VIMCONFIG/init_plugins.vim
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VimPlug and pluggins installation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Install vim-plug if not found
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-      silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-" Plugins will be downloaded under the specified directory.
-call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
-" Declare the list of plugins.
-" Fuzzy finder
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-" Colorscheme
-Plug 'folke/tokyonight.nvim'
-
-" Undo Tree
-Plug 'mbbill/undotree'
-
-Plug 'windwp/nvim-autopairs'
-
-" Git
-Plug 'tpope/vim-fugitive'
-
-" LSP and completion
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/nvim-cmp'
-
-" For luasnip users.
-Plug 'L3MON4D3/LuaSnip'
-Plug 'saadparwaiz1/cmp_luasnip'
-
-" Syntax
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/playground'
-Plug 'nvim-treesitter/nvim-treesitter-context'
-
-" Debugger Adapter Protocol
-Plug 'nvim-neotest/nvim-nio'
-Plug 'mfussenegger/nvim-dap'
-Plug 'leoluz/nvim-dap-go'
-Plug 'rcarriga/nvim-dap-ui'
-Plug 'theHamsta/nvim-dap-virtual-text'
-
-" Cloack
-Plug 'laytan/cloak.nvim'
-
-" List ends here. Plugins become visible to Vim after this call.
-call plug#end()
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Sourcing init.lua config file
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Sourcing init.lua config file
 :luafile $HOME/.config/nvim/init.lua.vim
 
-
-" Remap to install new pluggins
-nnoremap <silent><leader>1 :source ~/.config/nvim/init.vim \| :PlugInstall<CR>
-
 " Load other parts of the vimrc
-for f in glob('~/.config/nvim/plugins/*.vim', 0, 1)
-    execute 'source' f
+for file in split(glob('$VIMCONFIG/pluggedconf/*.vim'), '\n')
+    execute 'source' file
 endfor
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sets how many lines of history VIM has to remember
-set history=500
+set history=10000
 
 "Enable filetype plugins
 filetype plugin on
@@ -112,6 +50,11 @@ let mapleader = ","
 
 " Fast saving
 nmap <leader>w :w!<cr>
+"
+" Fast sourcing
+nmap <leader><leader>x :source %<CR>
+nmap <leader>x :.lua <CR>
+vnoremap <leader>x :lua<CR>
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
@@ -119,7 +62,6 @@ command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
 set number
 set relativenumber
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -209,14 +151,6 @@ set termguicolors
 
 colorscheme tokyonight-night
 
-" Set extra options when running in GUI mode
-if has("gui_running")
-set guioptions-=T
-set guioptions-=e
-set t_Co=256
-set guitablabel=%M\ %t
-endif
-
 " Set utf8 as standard encoding and en_US as the standard language
 lang en_US.UTF-8
 set encoding=utf8
@@ -252,7 +186,7 @@ set tabstop=4
 
 " Linebreak on 500 characters
 set lbr
-set tw=500
+set tw=80
 
 set ai "Auto indent
 set si "Smart indent
@@ -325,9 +259,6 @@ endtry
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-xnoremap J :m '>+1<CR>gv=gv
-xnoremap K :m '<-2<CR>gv=gv
-
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
@@ -337,25 +268,14 @@ set laststatus=2
 " Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remap VIM 0 to first non-blank character
 map 0 ^
 
-" Move a line of text using ALT+[jk] or Command+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-if has("mac") || has("macunix")
-nmap <D-j> <M-j>
-nmap <D-k> <M-k>
-vmap <D-j> <M-j>
-vmap <D-k> <M-k>
-endif
+xnoremap J :m '>+1<CR>gv=gv
+xnoremap K :m '<-2<CR>gv=gv
 
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
@@ -372,130 +292,10 @@ endif
 
 nnoremap <leader>u :UndotreeToggle<CR>
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => FZF
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup fzf
-  autocmd!
-augroup END
-
-" Key mapping
-
-" Buffers opens
-nnoremap <leader>b :Buffers<cr>
-
-" Files recursively from pwd
-" Everything except gitignore files
-nnoremap <leader>f :Files<cr>
-nnoremap <C-p> :GFiles --cached --others --exclude-standard<cr>
-
-" Ex commands
-nnoremap <leader>c :Commands<cr>
-" Ex command history. <C-e> to modify the command
-nnoremap <leader>: :History:<cr>
-
-nnoremap <leader>a :Rgi<space>
-nnoremap <leader>A :exec "Rgi ".expand("<cword>")<cr>
-
-"" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --fixed-strings: Search term as a literal string
-" --ignore-case: Case insensitive search
-" --no-ignore: Do not respect .gitignore, etc...
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-
-" ripgrep command to search in multiple files
-autocmd fzf VimEnter * command! -nargs=* Rg call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-" ripgrep - ignore the files defined in ignore files (.gitignore...)
-autocmd fzf VimEnter * command! -nargs=* Rgi call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-" ripgrep - ignore the files defined in ignore files (.gitignore...) and doesn't ignore case
-autocmd fzf VimEnter * command! -nargs=* Rgic call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --fixed-strings --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-" ripgrep - ignore the files defined in ignore files (.gitignore...) and doesn't ignore case
-autocmd fzf VimEnter * command! -nargs=* Rgir call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-" ripgrep - ignore the files defined in ignore files (.gitignore...) and doesn't ignore case and activate regex search
-autocmd fzf VimEnter * command! -nargs=* Rgr
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --hidden --no-ignore --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-" Customize fzf colors to match the current color scheme
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Search'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Visual'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'StatusLineNC'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
-
-
-" ALT-A CTRL-Q to select all and build quickfix list
-" https://github.com/junegunn/fzf.vim/issues/185
-function! s:build_quickfix_list(lines)
-  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
-  copen
-  cc
-endfunction
-
-let g:fzf_action = {
-  \ 'ctrl-q': function('s:build_quickfix_list'),
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-h': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
-" nmap <leader><tab> <plug>(fzf-maps-n)
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Git and fugitive
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>gs :Git<CR>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
-
-" Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
@@ -507,38 +307,10 @@ noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 map <leader>q :e ~/buffer<cr>
 
 " Quickly open a markdown buffer for scribble
-map <leader>x :e ~/buffer.md<cr>
+" map <leader>x :e ~/buffer.md<cr>
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
-
-function DisableSyntaxTreesitter()
-    if exists(':TSBufDisable')
-        exec 'TSBufDisable autotag'
-        exec 'TSBufDisable highlight'
-        exec 'TSBufDisable incremental_selection'
-        exec 'TSBufDisable indent'
-        exec 'TSBufDisable playground'
-        exec 'TSBufDisable query_linter'
-        exec 'TSBufDisable rainbow'
-        exec 'TSBufDisable refactor.highlight_definitions'
-        exec 'TSBufDisable refactor.navigation'
-        exec 'TSBufDisable refactor.smart_rename'
-        exec 'TSBufDisable refactor.highlight_current_scope'
-        exec 'TSBufDisable textobjects.swap'
-        " exec 'TSBufDisable textobjects.move'
-        exec 'TSBufDisable textobjects.lsp_interop'
-        exec 'TSBufDisable textobjects.select'
-    endif
-
-    set foldmethod=manual
-endfunction
-
-augroup BigFileDisable
-    autocmd!
-    autocmd BufReadPre,FileReadPre * if getfsize(expand("%")) > 512 * 1024 | exec DisableSyntaxTreesitter() | endif
-augroup END
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions

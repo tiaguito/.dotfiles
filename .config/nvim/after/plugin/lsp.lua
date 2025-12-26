@@ -1,11 +1,24 @@
-local nvim_lsp = require('lspconfig')
-local util = require("lspconfig.util")
+local nvim_lsp = vim.lsp.config
+
+-- organize imports
+-- https://github.com/neovim/nvim-lspconfig/issues/115#issuecomment-902680058
+function OrganizeImports(timeoutms)
+  local params = vim.lsp.util.make_range_params()
+  params.context = { only = { "source.organizeImports" } }
+  local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeoutms)
+  for _, res in pairs(result or {}) do
+    for _, r in pairs(res.result or {}) do
+      if r.edit then
+        vim.lsp.util.apply_workspace_edit(r.edit, "utf-16")
+      else
+        vim.lsp.buf.execute_command(r.command)
+      end
+    end
+  end
+end
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings
   local opts = { noremap = true, silent = true }
@@ -56,74 +69,48 @@ local on_attach = function(client, bufnr)
             augroup formatting
             autocmd! * <buffer>
             autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
-            autocmd BufWritePre <buffer> lua OrganizeImports(1000)
+            autocmd BufWritePre <buffer> lua OrganizeImports(3000)
             augroup END
             ]])
 end
 
--- organize imports
--- https://github.com/neovim/nvim-lspconfig/issues/115#issuecomment-902680058
-function OrganizeImports(timeoutms)
-  local params = vim.lsp.util.make_range_params()
-  params.context = { only = { "source.organizeImports" } }
-  local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeoutms)
-  for _, res in pairs(result or {}) do
-    for _, r in pairs(res.result or {}) do
-      if r.edit then
-        vim.lsp.util.apply_workspace_edit(r.edit, "UTF-8")
-      else
-        vim.lsp.buf.execute_command(r.command)
-      end
-    end
-  end
-end
-
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-local servers = { 'pyright', 'gopls', 'eslint', 'rust_analyzer', 'clangd', 'cmake', 'lua_ls', 'html', 'htmx', 'templ',
-  'bashls' }
+local servers = {
+  'pyright',
+  'gopls',
+  'eslint',
+  'rust_analyzer',
+  'clangd',
+  'cmake',
+  'lua_ls',
+  'html',
+  'htmx',
+  'templ',
+  'bashls'
+}
+
 for _, lsp in ipairs(servers) do
   if lsp == "clangd" then
-    nvim_lsp[lsp].setup {
+    nvim_lsp(lsp, {
       capabilities = capabilities,
       on_attach = on_attach,
       cmd = {
         "clangd",
         "--offset-encoding=utf-16",
       }
-    }
-  elseif lsp == "sourcekit" then
-    nvim_lsp[lsp].setup {
+    })
+  elseif lsp == "lua_ls" then
+    nvim_lsp(lsp, {
       capabilities = capabilities,
       on_attach = on_attach,
-      cmd = {
-        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
-      },
-      root_dir = function(filename, _)
-        return util.root_pattern("buildServer.json")(filename)
-            or util.root_pattern("*.xcodeproj", "*.xcworkspace")(filename)
-            or util.find_git_ancestor(filename)
-            or util.root_pattern("Package.swift")(filename)
-      end,
-    }
+    })
   else
-    nvim_lsp[lsp].setup {
+    nvim_lsp(lsp, {
       capabilities = capabilities,
       on_attach = on_attach,
-    }
+    })
   end
-end
 
-nvim_lsp['yamlls'].setup {
-  capabilities = capabilities,
-  on_attach = on_attach,
-  settings = {
-    yaml = {
-      schemas = {
-        ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = "/*.k8s.yaml",
-        ["http://json.schemastore.org/kustomization"] = "kustomization.yaml",
-        ["https://raw.githubusercontent.com/GoogleContainerTools/skaffold/master/docs/content/en/schemas/v2beta8.json"] = "skaffold.yaml",
-      }
-    }
-  }
-}
+  vim.lsp.enable(lsp)
+end

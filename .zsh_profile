@@ -1,14 +1,23 @@
 # Setup fzf
-source "/usr/share/doc/fzf/examples/completion.zsh"
-source "/usr/share/doc/fzf/examples/key-bindings.zsh"
+#
+# if M1 chip
+if [ -d /opt/homebrew/ ]
+then
+    # ---------
+    if [[ ! "$PATH" == */opt/homebrew/opt/fzf/bin* ]]; 
+    then
+      echo "Folder found";
+      PATH="${PATH:+${PATH}:}/opt/homebrew/opt/fzf/bin"
+    fi
 
-export FZF_DEFAULT_OPTS="-m 
-  --height 50% 
-  --layout=reverse 
-  --border 
-  --inline-info
-  --preview-window=:hidden
-  --preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'
-  --bind '?:toggle-preview'
-"
+    # Auto-completion
+    # ---------------
+    [[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
 
+    # Key bindings
+    # ------------
+    source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+else
+    source "/usr/local/opt/fzf/shell/completion.zsh"
+    source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+fi
