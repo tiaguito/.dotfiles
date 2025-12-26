@@ -1,3 +1,6 @@
+[user]
+    name = Tiago Monteiro
+    email = 9205078+tiaguito@users.noreply.github.com
 [credential]
     helper = osxkeychain
 
