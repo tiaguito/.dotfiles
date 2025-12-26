@@ -21,6 +21,8 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+source $ZDOTDIR/.zsh_aliases
+source $ZDOTDIR/.zsh_profile
 
 mcd() { mkdir -p $1; cd $1 }
 cdl() { cd $1; ls}
