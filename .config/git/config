@@ -1,0 +1,47 @@
+[credential]
+    helper = osxkeychain
+
+#------------------------------
+
+[core]
+    excludesfile = ~/.gitignore
+	fsmonitor = true
+	untrackedCache = true
+	sparseCheckout = true
+[column]
+    ui = auto
+[branch]
+    sort = -committerdate
+[tag]
+    sort = version:refname
+[init]
+    defaultBranch = master
+[diff]
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+[push]
+    default = simple
+    autoSetupRemote = true
+    followTags = true
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true
+[merge]
+    # (just 'diff3' if git version < 2.3)
+    conflictstyle = zdiff3
+[pull]
+    rebase = true
+[rebase]
+    autoSquash = true
+    autoStash = true
+    updateRefs = true
+[rerere]
+    enabled = true
+    autoupdate = true
+[commit]
+    verbose = true
+[help]
+    autocorrect = prompt
