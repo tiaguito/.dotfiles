@@ -1,34 +1,83 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+fpath=($DOTFILES/zsh/plugins $fpath)
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# +------------+
+# | NAVIGATION |
+# +------------+
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+setopt AUTO_PUSHD           # Push the current directory visited on the stack.
+setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
+setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
 
-plugins=(
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    colored-man-pages
-    pip
-    git
-    brew
-    zsh-vi-mode
-)
+source $ZDOTDIR/plugins/bd.zsh
 
-source $ZSH/oh-my-zsh.sh
-source $ZDOTDIR/.zsh_aliases
-source $ZDOTDIR/.zsh_profile
+# +---------+
+# | ALIASES |
+# +---------+
 
-mcd() { mkdir -p $1; cd $1 }
-cdl() { cd $1; ls}
-gfind() { find / -iname $@ 2>/dev/null }
-lfind() { find . -iname $@ 2>/dev/null }
-rtfm() { help $@ || man $@  }
+source $ZDOTDIR/.zaliases
+
+# +---------+
+# | SCRIPTS |
+# +---------+
+
+source $ZDOTDIR/scripts.zsh
+
+# +------------+
+# | COMPLETION |
+# +------------+
+
+source $ZDOTDIR/completion.zsh
+
+# +--------+
+# | PROMPT |
+# +--------+
+
+fpath=($ZDOTDIR/prompt $fpath)
+source $ZDOTDIR/prompt/prompt_purification_setup
+
+# +-----------+
+# | VI KEYMAP |
+# +-----------+
+
+bindkey -v
+export KEYTIMEOUT=1
+
+source $ZDOTDIR/plugins/cursor_mode
+
+# edit current command line with vim (vim-mode, then CTRL-v)
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd '^v' edit-command-line
+
+# add vi text-objects for brackets and quotes
+autoload -Uz select-bracketed select-quoted
+zle -N select-quoted
+zle -N select-bracketed
+for km in viopp visual; do
+  bindkey -M $km -- '-' vi-up-line-or-history
+  for c in {a,i}${(s..)^:-\'\"\`\|,./:;=+@}; do
+    bindkey -M $km $c select-quoted
+  done
+  for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+    bindkey -M $km $c select-bracketed
+  done
+done
+
+# emulation of vim-surround
+autoload -Uz surround
+zle -N delete-surround surround
+zle -N add-surround surround
+zle -N change-surround surround
+bindkey -M vicmd cs change-surround
+bindkey -M vicmd ds delete-surround
+bindkey -M vicmd ys add-surround
+bindkey -M visual S add-surround
+
+# +---------------------+
+# | SYNTAX HIGHLIGHTING |
+# +---------------------+
+
+source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
