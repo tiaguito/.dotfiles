@@ -5,9 +5,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
 export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
 
-# TMUX
-export TMUX_TMPDIR="$HOME/.local/tmp"
-
 # Editor
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -19,10 +16,14 @@ export HISTSIZE=10000                   # Maximum events for internal history
 export SAVEHIST=10000                   # Maximum events in history file
 
 # other software
+export TMUX_CONFIGDIR="$XDG_CONFIG_HOME/tmux"
 export VIMCONFIG="$XDG_CONFIG_HOME/nvim"
 
 # Man pages
 export MANPAGER="nvim +Man!"
+
+# TMUX
+export TMUX_TMPDIR="$HOME/.local/tmp"
 
 export FZF_DEFAULT_OPTS="-m --height 50% \
 --layout reverse \
