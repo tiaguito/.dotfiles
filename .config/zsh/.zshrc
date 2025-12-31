@@ -17,6 +17,12 @@ source $ZDOTDIR/plugins/bd.zsh
 source $ZDOTDIR/.zaliases
 
 # +---------+
+# | PROFILE |
+# +---------+
+
+source $ZDOTDIR/.zprofile
+
+# +---------+
 # | SCRIPTS |
 # +---------+
 

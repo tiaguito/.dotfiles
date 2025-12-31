@@ -1,3 +1,4 @@
+eval "$(/opt/homebrew/bin/brew shellenv)"
 # Setup fzf
 #
 # if M1 chip
@@ -6,7 +7,6 @@ then
     # ---------
     if [[ ! "$PATH" == */opt/homebrew/opt/fzf/bin* ]]; 
     then
-      echo "Folder found";
       PATH="${PATH:+${PATH}:}/opt/homebrew/opt/fzf/bin"
     fi
 
