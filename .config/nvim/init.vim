@@ -1,9 +1,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sections:
-"    -> vim-plug and pluggins installation
-"       -> markdown-preview config
-"    -> Sourcing init.lua config file
 "    -> General
+"    -> Loading pluggins and other files
 "    -> VIM user interface
 "    -> Colors and Fonts
 "    -> Files and backups
@@ -12,23 +10,11 @@
 "    -> Moving around, tabs and buffers
 "    -> Status line
 "    -> Editing mappings
-"    -> Git and fugitive
-"    -> Spell checking
+"    -> vimgrep searching and cope displaying
 "    -> Misc
 "    -> Helper functions
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" VimPlug and pluggins installation
-source $VIMCONFIG/init_plugins.vim
-
-" Sourcing init.lua config file
-:luafile $HOME/.config/nvim/init.lua.vim
-
-" Load other parts of the vimrc
-for file in split(glob('$VIMCONFIG/pluggedconf/*.vim'), '\n')
-    execute 'source' file
-endfor
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -60,8 +46,30 @@ vnoremap <leader>x :lua<CR>
 " (useful for handling the permission-denied error)
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
+" Set line numbers and relative line numbers
 set number
 set relativenumber
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Loading pluggins and other files
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Install vim-plug if not found
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+      silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" Remap to install new pluggins
+nnoremap <leader>1 :source $MYVIMRC \| :PlugInstall<CR>
+
+" VimPlug and pluggins installation
+source $VIMCONFIG/init_plugins.vim
+
+" Load other parts of the vimrc
+for file in split(glob('$VIMCONFIG/pluggedconf/*.nvimrc'), '\n')
+    execute 'source' file
+endfor
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -170,7 +178,6 @@ set noswapfile
 set undolevels=10000
 set undoreload=10000
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -259,15 +266,6 @@ endtry
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-""""""""""""""""""""""""""""""
-" => Status line
-""""""""""""""""""""""""""""""
-" Always show the status line
-set laststatus=2
-
-" Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -279,11 +277,11 @@ xnoremap K :m '<-2<CR>gv=gv
 
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
-let save_cursor = getpos(".")
-let old_query = getreg('/')
-silent! %s/\s\+$//e
-call setpos('.', save_cursor)
-call setreg('/', old_query)
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    silent! %s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
 endfun
 
 if has("autocmd")
