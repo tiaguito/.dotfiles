@@ -21,7 +21,7 @@ git clone --separate-git-dir=$HOME/.dotfiles https://github.com/tiaguito/.dotfil
 # Copy contents from worktree to desired location
 rsync --recursive --verbose --exclude '.git' /tmp/dotfiles/ $HOME/
 # Delete worktree
-rm --recursive my-dotfiles-tmp
+rm --recursive /tmp/dotfiles
 # Export the following alias to your shell config file
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 ```
