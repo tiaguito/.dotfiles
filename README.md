@@ -14,7 +14,7 @@ echo ".dotfiles" >> .gitignore
 # Clone the repository into your `$HOME` directory
 git clone --bare https://github.com/tiaguito/.dotfiles $HOME/.dotfiles
 # Set the flag `showUntrackedFiles` to `no` on this specific (local) repository:
-config config --local status.showUntrackedFiles no
+dotfiles config --local status.showUntrackedFiles no
 ```
 
 ## use
