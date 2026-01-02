@@ -5,8 +5,11 @@ The solution used to manage my dotfiles repo comes from this [article](https://n
 
 ## Setup
 ```bash
+# Create a bare repository
 git init --bare $HOME/.dotfiles
+# Export the following alias to your shell config file
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+# Set the repository origin
 dotfiles remote add origin https://github.com/tiaguito/.dotfiles.git
 # Make git ignore source repository
 echo ".dotfiles" >> .gitignore
@@ -30,6 +33,7 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 ```bash
 # Set the flag `showUntrackedFiles` to `no` on this specific (local) repository:
 dotfiles config --local status.showUntrackedFiles no
+# Set the repository origin
 dotfiles remote add origin https://github.com/tiaguito/.dotfiles.git
 ```
 
