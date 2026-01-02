@@ -27,6 +27,8 @@ rsync --recursive --verbose --exclude '.git' /tmp/dotfiles/ $HOME/
 rm --recursive /tmp/dotfiles
 # Export the following alias to your shell config file
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+# If you have submodules
+dotfiles submodule update --init
 ```
 
 ## Configuration
