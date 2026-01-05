@@ -21,6 +21,8 @@ export SAVEHIST=10000                   # Maximum events in history file
 # other software
 export TMUX_CONFIGDIR="$XDG_CONFIG_HOME/tmux"
 export VIMCONFIG="$XDG_CONFIG_HOME/nvim"
+export YABAICONFIG="$XDG_CONFIG_HOME/yabai"
+export SKHDRC="$XDG_CONFIG_HOME/skhd"
 
 # Man pages
 export MANPAGER="nvim +Man!"
