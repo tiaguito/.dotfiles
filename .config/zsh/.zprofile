@@ -1,4 +1,3 @@
-eval "$(/opt/homebrew/bin/brew shellenv)"
 # Setup fzf
 #
 # if M1 chip

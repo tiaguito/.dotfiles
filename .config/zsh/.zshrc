@@ -1,4 +1,4 @@
-fpath=($DOTFILES/zsh/plugins $fpath)
+fpath=($ZDOTDIR/zsh/plugins $fpath)
 
 # +------------+
 # | NAVIGATION |

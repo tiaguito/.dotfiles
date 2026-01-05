@@ -1,5 +1,8 @@
 export DOTFILES="$HOME/.dotfiles"
 
+# Homebrew setup
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # XDG
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
