@@ -46,5 +46,8 @@ Plug 'laytan/cloak.nvim'
 " Status line
 Plug 'nvim-mini/mini.nvim'
 
+" vim-tmux navigator
+Plug 'christoomey/vim-tmux-navigator'
+
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
