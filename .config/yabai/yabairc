@@ -59,6 +59,9 @@ yabai -m rule --add app="^Microsoft Teams$" space=4
 yabai -m rule --add app="^Zoom$" space=6
 
 yabai -m rule --add app='^System Settings$' manage=off
+yabai -m rule --add app='^Docker Desktop$' manage=off
+yabai -m rule --add app='^Podman Desktop$' manage=off
+yabai -m rule --add app='^python$' manage=off
 yabai -m rule --add app='^Calculator$' manage=off
 yabai -m rule --add title='^Calendar$' manage=off
 yabai -m rule --add title='^Settings$' manage=off
@@ -68,9 +71,6 @@ yabai -m rule --add app="Finder" title=" Info" manage=off
 yabai -m rule --add app="Finder" title="Copy" manage=off
 yabai -m rule --add app="Finder" title="Mov" manage=off
 yabai -m rule --add app="Finder" title="Trash" manage=off
-
-# spacebar padding on top screen
-SPACEBAR_HEIGHT=$(spacebar -m config height)
-yabai -m config external_bar all:$SPACEBAR_HEIGHT:0
+yabai -m rule --add app="^zoom\.us$" title="^Zoom Workplace$" manage=off
 
 echo "yabai configuration loaded.."
