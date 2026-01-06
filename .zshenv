@@ -30,6 +30,9 @@ export MANPAGER="nvim +Man!"
 # TMUX
 export TMUX_TMPDIR="$HOME/.local/tmp"
 
+# FZF 
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/"'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="-m --height 50% \
 --layout reverse \
 --border \
