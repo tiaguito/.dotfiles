@@ -19,6 +19,7 @@ local parsers = {
   "markdown",
   "yaml",
   "templ",
+  "proto",
 }
 
 require('nvim-treesitter').install(parsers)
