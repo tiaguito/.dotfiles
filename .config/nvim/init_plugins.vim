@@ -8,6 +8,8 @@ Plug 'junegunn/fzf.vim'
 
 " Colorscheme
 Plug 'folke/tokyonight.nvim'
+Plug 'ishan9299/nvim-solarized-lua'
+Plug 'nordtheme/vim'
 
 " Undo Tree
 Plug 'mbbill/undotree'
@@ -48,6 +50,12 @@ Plug 'nvim-mini/mini.nvim'
 
 " vim-tmux navigator
 Plug 'christoomey/vim-tmux-navigator'
+
+" gopher.nvim
+Plug 'olexsmir/gopher.nvim'
+
+" conform.nvim - code formatting
+Plug 'stevearc/conform.nvim'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()

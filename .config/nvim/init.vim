@@ -11,6 +11,7 @@
 "    -> Status line
 "    -> Editing mappings
 "    -> vimgrep searching and cope displaying
+"    -> gopher.nvim 
 "    -> Misc
 "    -> Helper functions
 "
@@ -157,7 +158,7 @@ set regexpengine=0
 
 set termguicolors
 
-colorscheme tokyonight-night
+colorscheme nord
 
 " Set utf8 as standard encoding and en_US as the standard language
 lang en_US.UTF-8
@@ -294,6 +295,12 @@ nnoremap <leader>u :UndotreeToggle<CR>
 " => Git and fugitive
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>gs :Git<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => gopher.nvim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>gsj :GoTagAdd json<CR>
+map <leader>gsy :GoTagAdd yaml<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc

@@ -77,18 +77,19 @@ end
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local servers = {
-  'pyright',
-  'gopls',
-  'eslint',
-  'rust_analyzer',
-  'clangd',
-  'cmake',
-  'lua_ls',
-  'html',
-  'htmx',
-  'templ',
   'bashls',
   'buf_ls',
+  'clangd',
+  'cmake',
+  'eslint',
+  'gopls',
+  'html',
+  'htmx',
+  'lua_ls',
+  'pyright',
+  'ruff',
+  'rust_analyzer',
+  'templ',
 }
 
 for _, lsp in ipairs(servers) do
@@ -101,10 +102,38 @@ for _, lsp in ipairs(servers) do
         "--offset-encoding=utf-16",
       }
     })
-  elseif lsp == "lua_ls" then
+  elseif lsp == "gopls" then
     nvim_lsp(lsp, {
       capabilities = capabilities,
       on_attach = on_attach,
+      cmd = { "gopls" },
+      filetypes = { "go", "gomod", "gowork", "gotmpl" },
+      settings = {
+        gopls = {
+          completeUnimported = true,
+          usePlaceholders = true,
+          analyses = {
+            unusedparams = true,
+          },
+          gofumpt = true,
+        },
+      },
+    })
+  elseif lsp == "pyright" or "ruff" then
+    nvim_lsp(lsp, {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      filetypes = { "python" },
+      settings = {
+        python = {
+          analysis = {
+            typeCheckingMode = "basic",
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+            diagnosticMode = "workspace",
+          },
+        },
+      },
     })
   else
     nvim_lsp(lsp, {
