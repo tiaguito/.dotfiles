@@ -19,6 +19,7 @@ Plug 'windwp/nvim-autopairs'
 
 " Git
 Plug 'tpope/vim-fugitive'
+Plug 'lewis6991/gitsigns.nvim'
 
 " LSP and completion
 Plug 'neovim/nvim-lspconfig'
@@ -54,7 +55,7 @@ Plug 'christoomey/vim-tmux-navigator'
 " gopher.nvim
 Plug 'olexsmir/gopher.nvim'
 
-" conform.nvim - code formatting
+" code formatting
 Plug 'stevearc/conform.nvim'
 
 " List ends here. Plugins become visible to Vim after this call.
