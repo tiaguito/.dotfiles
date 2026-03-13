@@ -30,8 +30,9 @@ vim.api.nvim_create_autocmd('FileType', {
     -- syntax highlighting, provided by Neovim
     vim.treesitter.start()
     -- folds, provided by Neovim
-    vim.wo.folderexpr = 'v:lua.vim.treesitter.folderexpr()'
     vim.wo.foldmethod = 'expr'
+    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    vim.opt.foldlevel = 99
     -- indentation, provided by nvim-treesiter
     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   end,
