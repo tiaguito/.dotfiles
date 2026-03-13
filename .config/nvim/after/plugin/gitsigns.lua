@@ -1,4 +1,10 @@
 require('gitsigns').setup{
+  worktrees = {
+    {
+      toplevel = vim.env.HOME, -- The working tree is my home directory
+      gitdir = vim.env.HOME .. '/.dotfiles/', -- The location of my bare .git directory
+    },
+  },
   on_attach = function(bufnr)
     local gitsigns = require('gitsigns')
 
@@ -9,7 +15,7 @@ require('gitsigns').setup{
     end
 
     -- Navigation
-    map('n', ']c', function()
+    map('n', ']h', function()
       if vim.wo.diff then
         vim.cmd.normal({']c', bang = true})
       else
@@ -17,7 +23,7 @@ require('gitsigns').setup{
       end
     end)
 
-    map('n', '[c', function()
+    map('n', '[h', function()
       if vim.wo.diff then
         vim.cmd.normal({'[c', bang = true})
       else
