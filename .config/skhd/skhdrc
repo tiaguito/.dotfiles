@@ -111,8 +111,11 @@ resize < alt - l : yabai -m window --resize right:25:0
 # close focused window
 alt - w : yabai -m window --close
 
+# enter floating mode for the focused container
+alt + shift - f : yabai -m window --toggle float; yabai -m window --grid 4:4:1:1:2:2
+
 # enter fullscreen mode for the focused container
-alt + shift - f : yabai -m window --toggle zoom-fullscreen
+alt + shift - m : yabai -m window --toggle zoom-fullscreen
 
 # toggle window native fullscreen
 alt + shift - z : yabai -m window --toggle native-fullscreen
@@ -121,8 +124,6 @@ alt + shift - z : yabai -m window --toggle native-fullscreen
 alt - return : /Applications/iTerm.app/Contents/MacOS/iTerm2
 alt + shift - return : open -na "Firefox"
 alt - e : open -na "Finder"
-alt + shift -  v : open /usr/bin/vim
-alt - v : open -na "Cisco AnyConnect Secure Mobility Client"
 
 # -- start/stop yabai --
 alt + ctrl - q : brew services stop yabai
