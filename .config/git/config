@@ -1,6 +1,5 @@
-[user]
-    name = Tiago Monteiro
-    email = 9205078+tiaguito@users.noreply.github.com
+[include]
+    path = config-personal
 [credential]
     helper = osxkeychain
 
@@ -11,6 +10,7 @@
     #fsmonitor = true
 	untrackedCache = true
 	sparseCheckout = true
+    editor = nvim
 [column]
     ui = auto
 [branch]
