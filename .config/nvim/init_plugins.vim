@@ -9,7 +9,7 @@ Plug 'junegunn/fzf.vim'
 " Colorscheme
 Plug 'folke/tokyonight.nvim'
 Plug 'ishan9299/nvim-solarized-lua'
-Plug 'nordtheme/vim'
+Plug 'arcticicestudio/nord-vim'
 
 " Undo Tree
 Plug 'mbbill/undotree'
@@ -19,7 +19,13 @@ Plug 'windwp/nvim-autopairs'
 
 " Git
 Plug 'tpope/vim-fugitive'
+Plug 'NeogitOrg/neogit'
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'sindrets/diffview.nvim'
+Plug 'ibhagwan/fzf-lua'
+
+" Necessary dependency for a lot of plugins
+Plug 'nvim-lua/plenary.nvim'
 
 " LSP and completion
 Plug 'neovim/nvim-lspconfig'
@@ -57,6 +63,11 @@ Plug 'olexsmir/gopher.nvim'
 
 " code formatting
 Plug 'stevearc/conform.nvim'
+
+" AI stuff and dependencies down below
+Plug 'nickjvandyke/opencode.nvim'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'folke/snacks.nvim'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()

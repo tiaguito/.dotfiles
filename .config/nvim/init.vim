@@ -158,7 +158,19 @@ set regexpengine=0
 
 set termguicolors
 
-colorscheme nord
+colorscheme tokyonight-moon
+
+" Config for the solarized colorscheme
+" let g:solarized_italic_comments = v:true
+" let g:solarized_italic_keywords = v:true
+" let g:solarized_italic_functions = v:true
+" let g:solarized_italic_variables = v:true
+" let g:solarized_contrast = v:true
+" let g:solarized_borders = v:false
+" let g:solarized_disable_background = v:false
+" 
+" " Load the colorsheme
+" colorscheme solarized
 
 " Set utf8 as standard encoding and en_US as the standard language
 lang en_US.UTF-8
