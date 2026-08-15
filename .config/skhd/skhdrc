@@ -111,7 +111,7 @@ resize < alt - l : yabai -m window --resize right:25:0
 # close focused window
 alt - w : yabai -m window --close
 
-# enter floating mode for the focused container
+# enter floating mode for the focused container, and center window on the screen
 alt + shift - f : yabai -m window --toggle float; yabai -m window --grid 4:4:1:1:2:2
 
 # enter fullscreen mode for the focused container
@@ -121,7 +121,6 @@ alt + shift - m : yabai -m window --toggle zoom-fullscreen
 alt + shift - z : yabai -m window --toggle native-fullscreen
 
 # Application shortcuts
-alt - return : /Applications/iTerm.app/Contents/MacOS/iTerm2
 alt + shift - return : open -na "Firefox"
 alt - e : open -na "Finder"
 
